@@ -44,6 +44,7 @@ function(add_example file mode lib)
 		add_protobuf(${target} ${mode})
 	endif()
 	copy_dlls(${target})
+	set_property(GLOBAL APPEND PROPERTY EXAMPLE_TARGETS_${mode} ${target})
 endfunction()
 
 function(add_examples glob mode lib)
@@ -95,6 +96,16 @@ endif()
 if(ZENOHCXX_ZENOHPICO)
 	# zenohcxx examples compiled with C++ compiler with zenohpico
 	add_examples("${CMAKE_CURRENT_SOURCE_DIR}/universal/*.cxx" zenohpico zenohcxx::zenohpico)
+endif()
+
+# Install examples
+if(ZENOHCXX_ZENOHC)
+	get_property(tgt_zenohc GLOBAL PROPERTY EXAMPLE_TARGETS_zenohc)
+	install(TARGETS ${tgt_zenohc} RUNTIME DESTINATION bin/examples/zenohc)
+endif()
+if(ZENOHCXX_ZENOHPICO)
+	get_property(tgt_zenohpico GLOBAL PROPERTY EXAMPLE_TARGETS_zenohpico)
+	install(TARGETS ${tgt_zenohpico} RUNTIME DESTINATION bin/examples/zenohpico)
 endif()
 
 # check compilation of simple examples
