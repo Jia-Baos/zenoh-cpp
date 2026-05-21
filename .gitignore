@@ -43,3 +43,5 @@ docs/latex
 
 zenohcpp.pc
 .cache
+
+install-prefix
